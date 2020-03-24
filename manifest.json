@@ -1,0 +1,17 @@
+{
+	"manifest_version": 2,
+
+	"name": "Advanced Threat Protection link cleaner",
+	"description": "Automatically rewrite Office 365 ATP links locally without the slow (and non-private) redirect.",
+	"version": "1.0",
+
+	"permissions": [
+		"*://*.safelinks.protection.outlook.com/*",
+		"webRequest",
+		"webRequestBlocking"
+	],
+
+	"background": {
+		"scripts":["background.js"]
+	}
+}
