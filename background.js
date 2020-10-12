@@ -1,24 +1,18 @@
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details) {
 		if (details.url) {
-			var urlParts = details.url.split('?')[1];
-			var requestParams = urlParts.split('&');
-			var targetUrl = "Error:  couldn't find target URL.";
+			const urlParts = details.url.split('?')[1];
+			const requestParams = urlParts.split('&');
+			var targetUrl = "Error: couldn't find target URL";
 			for (i = 0; i < requestParams.length; i++) {
-				paramValues = requestParams[i].split('=');
+				const paramValues = requestParams[i].split('=');
 				if(paramValues[0] == 'url') {
 					targetUrl = decodeURIComponent(paramValues[1]);
 				}
 			}
-			if (targetUrl && confirm('Navigate to ' + targetUrl + '?')) {
-				console.log('Redirecting to ' + targetUrl);
-				return {
-					redirectUrl : targetUrl
-				};
-			} else {
-				return {
-					cancel: true
-				}
+			return {
+				// cancel: true // simplest method, but does not let us customise the response
+				redirectUrl: chrome.extension.getURL('blocked.html?u=' + targetUrl)
 			}
 		}
 
