@@ -8,14 +8,21 @@ function copyLink() {
 	copySource.style.position = 'absolute';
 	copySource.style.left = '-9999px';
 	document.body.appendChild(copySource);
+
 	copySource.select();
 	document.execCommand('copy');
 	document.body.removeChild(copySource);
-	document.querySelector('p a:last-child').innerHTML = 'copy ✔'; //.appendChild(document.createTextNode(' ✔'));
+	document.querySelector('icon').classList.remove('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-	document.querySelector('p span:first-child').appendChild(document.createTextNode(targetLink));
-	document.querySelector('p a:first-child').setAttribute('href', targetLink);
-	document.querySelector('p a:last-child').addEventListener('click', copyLink);
+	if (targetLink) {
+		const linkElement = document.querySelector('span');
+		linkElement.innerHTML = '';
+		linkElement.appendChild(document.createTextNode(targetLink));
+		document.querySelector('a:first-child').setAttribute('href', targetLink);
+		document.querySelector('a:last-child').addEventListener('click', copyLink);
+	} else {
+		document.querySelector('p:last-child').classList.add('hidden');
+	}
 });
