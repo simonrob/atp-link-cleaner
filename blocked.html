@@ -32,9 +32,14 @@
 				color: #666;
 			}
 			span {
-				display: block;
+				display: inline-block;
+				padding: 0.2em 0.5em;
 				font-family: monospace;
 				font-size: large;
+			}
+			#edit-icon {
+				text-decoration: none;
+				vertical-align: middle;
 			}
 			.hidden {
 				display: none;
@@ -47,8 +52,8 @@
 	<body>
 		<div>
 			<p>The ATP link cleaner extension prevented automatic navigation to</p>
-			<p><span>[ No link found ]</span></p>
-			<p>You can <a href="#" rel="nofollow noreferrer noopener">navigate to</a> or <a href="#">copy<icon class="hidden"> ✔</icon></a> this link.</span>
+			<p><span>[ No link found ]</span> <a id="edit-icon" href="#">✎</a></p>
+			<p>You can <a id="visit" href="#" rel="nofollow noreferrer noopener">navigate to</a>, <a id="edit-text" href="#">edit</a> or <a id="copy" href="#">copy<icon class="hidden"> ✔</icon></a> this link.</span>
 			</p>
 		</div>
 	</body>
