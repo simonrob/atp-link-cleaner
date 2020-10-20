@@ -1,25 +1,17 @@
 const urlParams = new URLSearchParams(window.location.search);
-var targetLink = urlParams.get('u');
+const originalLink = urlParams.get('u');
+var targetLink = originalLink;
+
+function setLink(link) {
+	targetLink = link;
+	document.querySelector('span').textContent = targetLink;
+	document.querySelector('#visit').setAttribute('href', targetLink);
+	window.history.replaceState(null, '', '?u=' + targetLink);
+}
 
 function editLink(navigateToEnd) {
 	const linkElement = document.querySelector('span');
-	linkElement.addEventListener('keydown', function(event) {
-		if (event.keyCode == 13) {
-			event.preventDefault();
-			linkElement.contentEditable = false;
-			if (event.metaKey) {
-				window.location.href = targetLink;
-			}
-		}
-	}, false);
-	linkElement.addEventListener('input', function(event) {
-		targetLink = this.textContent;
-		document.querySelector('#visit').setAttribute('href', targetLink);
-		window.history.replaceState(null, '', '?u=' + targetLink);
-	}, false);
-
 	linkElement.contentEditable = true;
-
 	if (navigateToEnd && linkElement.textContent.length > 0) {
 		const selection = window.getSelection();
 		const range = document.createRange();
@@ -45,17 +37,42 @@ function copyLink() {
 	document.querySelector('icon').classList.remove('hidden');
 }
 
+function stripLink() {
+	setLink(targetLink.split('?')[0]);
+}
+
+function resetLink() {
+	setLink(originalLink);
+}
+
 document.addEventListener('DOMContentLoaded', function(){
 	if (targetLink) {
+		setLink(targetLink);
+
 		const linkElement = document.querySelector('span');
-		linkElement.textContent = targetLink;
+		linkElement.addEventListener('keydown', function(event) {
+			if (event.keyCode == 13) {
+				event.preventDefault();
+				linkElement.contentEditable = false;
+				if (event.metaKey) {
+					document.querySelector('#visit').click();
+				}
+			}
+		}, false);
+		linkElement.addEventListener('input', function(event) {
+			setLink(this.textContent);
+		}, false);
+
 		linkElement.addEventListener('click', function() { editLink(false); });
-		document.querySelector('#visit').setAttribute('href', targetLink);
-		document.querySelector('#edit-icon').addEventListener('click', function() { editLink(true); });
-		document.querySelector('#edit-text').addEventListener('click', function() { editLink(true); });
+		document.querySelector('#edit').addEventListener('click', function() { editLink(true); });
 		document.querySelector('#copy').addEventListener('click', copyLink);
+		document.querySelector('#strip').addEventListener('click', stripLink);
+		document.querySelector('#reset').addEventListener('click', resetLink);
 	} else {
-		document.querySelector('#edit-icon').classList.add('hidden');
-		document.querySelector('p:last-child').classList.add('hidden');
+		document.querySelector('#edit').classList.add('hidden');
+		const options = document.querySelectorAll('.options');
+		options.forEach(option => {
+			option.classList.add('hidden');
+		});
 	}
 });

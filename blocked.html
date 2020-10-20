@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
+		<meta name="description" content="ATP link cleaner">
+		<meta name="author" content="Simon Robinson">
 
 		<title>ATP link cleaner: navigation intercepted</title>
 
@@ -37,9 +37,12 @@
 				font-family: monospace;
 				font-size: large;
 			}
-			#edit-icon {
+			#edit {
 				text-decoration: none;
 				vertical-align: middle;
+			}
+			.smaller {
+				font-size: medium;
 			}
 			.hidden {
 				display: none;
@@ -52,9 +55,9 @@
 	<body>
 		<div>
 			<p>The ATP link cleaner extension prevented automatic navigation to</p>
-			<p><span>[ No link found ]</span> <a id="edit-icon" href="#">✎</a></p>
-			<p>You can <a id="visit" href="#" rel="nofollow noreferrer noopener">navigate to</a>, <a id="edit-text" href="#">edit</a> or <a id="copy" href="#">copy<icon class="hidden"> ✔</icon></a> this link.</span>
-			</p>
+			<p><span>[ No link found ]</span> <a id="edit" href="#" title="Edit link">✎</a></p>
+			<p class="options">You can <a id="visit" href="#" rel="nofollow noreferrer noopener">navigate to</a> or <a id="copy" href="#">copy<icon class="hidden"> ✔</icon></a> this link</p>
+			<p class="options smaller">Other options: <a id="strip" href="#">Strip query parameters</a> | <a id="reset" href="#">Reset to original</a></p>
 		</div>
 	</body>
 </html>
