@@ -7,6 +7,7 @@ function setLink(link) {
 	document.querySelector('span').textContent = targetLink;
 	document.querySelector('#visit').setAttribute('href', targetLink);
 	window.history.replaceState(null, '', '?u=' + targetLink);
+	setRootLink();
 }
 
 function editLink(navigateToEnd) {
@@ -34,7 +35,17 @@ function copyLink() {
 	copySource.select();
 	document.execCommand('copy');
 	document.body.removeChild(copySource);
-	document.querySelector('icon').classList.remove('hidden');
+	document.querySelector('icon.copy').classList.remove('hidden');
+}
+
+function setRootLink() {
+	const rootLink = document.querySelector('#root');
+	const rootLinkParts = targetLink.split(/[/?]/);
+	if (rootLinkParts.length >= 3) {
+		rootLink.setAttribute('href', rootLinkParts[0] + '//' + rootLinkParts[2] + '/');
+	} else {
+		rootLink.setAttribute('href', '#');
+	}
 }
 
 function stripLink() {
