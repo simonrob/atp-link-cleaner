@@ -7,7 +7,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 			for (i = 0; i < requestParams.length; i++) {
 				const paramValues = requestParams[i].split('=');
 				if(paramValues[0] == 'url') {
-					targetUrl = decodeURIComponent(paramValues[1]);
+					targetUrl = paramValues[1];
 				}
 			}
 			return {

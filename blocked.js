@@ -6,7 +6,7 @@ function setLink(link) {
 	targetLink = link;
 	document.querySelector('span').textContent = targetLink;
 	document.querySelector('#visit').setAttribute('href', targetLink);
-	window.history.replaceState(null, '', '?u=' + targetLink);
+	window.history.replaceState(null, '', '?u=' + encodeURIComponent(targetLink));
 	setRootLink();
 }
 
