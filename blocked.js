@@ -24,6 +24,10 @@ function editLink(navigateToEnd) {
 	linkElement.focus();
 }
 
+function openIncognito() {
+	chrome.windows.create({incognito: true, url: targetLink});
+}
+
 function copyLink() {
 	const copySource = document.createElement('textarea');
 	copySource.value = targetLink;
@@ -77,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		linkElement.addEventListener('click', function() { editLink(false); });
 		document.querySelector('#edit').addEventListener('click', function() { editLink(true); });
 		document.querySelector('#copy').addEventListener('click', copyLink);
+		document.querySelector('#incognito').addEventListener('click', openIncognito);
 		document.querySelector('#strip').addEventListener('click', stripLink);
 		document.querySelector('#reset').addEventListener('click', resetLink);
 	} else {
