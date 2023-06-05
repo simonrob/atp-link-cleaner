@@ -33,7 +33,10 @@ chrome.webRequest.onBeforeRequest.addListener(
 		};
 	},
 	{
-		urls: ['*://*.safelinks.protection.outlook.com/*'],
+		urls: [
+			'*://*.safelinks.protection.outlook.com/*',
+			'*://outlook.office.com/mail/safelink.html*'
+		],
 		// types: ['main_frame', 'sub_frame']
 
 	},
