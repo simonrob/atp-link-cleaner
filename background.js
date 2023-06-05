@@ -1,4 +1,6 @@
-chrome.webRequest.onBeforeRequest.addListener(
+browser = !(typeof globalThis.browser === 'undefined' || 
+			Object.getPrototypeOf(globalThis.browser) !== Object.prototype) ? browser : chrome;
+browser.webRequest.onBeforeRequest.addListener(
 	function(details) {
 		if (details.method === 'GET') {
 			if (details.url) {
@@ -7,7 +9,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 					const urlComponent = encodeURIComponent(url.searchParams.get('url'));
 					return {
 						// cancel: true // cancelling is simplest, but it does not let us customise the response
-						redirectUrl: chrome.extension.getURL('blocked.html?u=' + urlComponent)
+						redirectUrl: browser.extension.getURL('blocked.html?u=' + urlComponent)
 					}
 				}
 			} else {
@@ -19,7 +21,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 			if (details.requestBody.formData && details.requestBody.formData.Url && details.requestBody.formData.Url.length == 1) {
 				const urlComponent = encodeURIComponent(details.requestBody.formData.Url[0]);
 				return {
-					redirectUrl: chrome.extension.getURL('blocked.html?u=' + urlComponent)
+					redirectUrl: browser.extension.getURL('blocked.html?u=' + urlComponent)
 				}
 			} else {
 				// probably a POST-less request to the root domain (*.safelinks.protection.outlook.com/GetUrlReputation)
@@ -29,7 +31,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 		}
 
 		return {
-			redirectUrl: chrome.extension.getURL('blocked.html')
+			redirectUrl: browser.extension.getURL('blocked.html')
 		};
 	},
 	{

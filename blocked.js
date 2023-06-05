@@ -2,6 +2,12 @@ const urlParams = new URLSearchParams(window.location.search);
 const originalLink = urlParams.get('u');
 var targetLink = originalLink;
 
+function hasBrowserObject() {
+	// see: https://github.com/mozilla/webextension-polyfill/blob/master/src/browser-polyfill.js
+	return !(typeof globalThis.browser === 'undefined' || 
+			 Object.getPrototypeOf(globalThis.browser) !== Object.prototype);
+}
+
 function setLink(link) {
 	targetLink = link;
 	document.querySelector('span').textContent = targetLink;
@@ -25,7 +31,19 @@ function editLink(navigateToEnd) {
 }
 
 function openIncognito() {
-	chrome.windows.create({incognito: true, url: targetLink});
+	browser = hasBrowserObject() ? browser : chrome;
+	if (typeof browser.extension.isAllowedIncognitoAccess === 'function') {
+		browser.extension.isAllowedIncognitoAccess(function(isAllowed) {
+			if (isAllowed) {
+				browser.windows.create({incognito: true, url: targetLink});
+			} else {
+				window.alert('The ATP link cleaner extension has not been granted permission to run in private mode. ' +
+							 'Please grant this permission and try again.');
+			}
+		});
+	} else {
+		browser.windows.create({incognito: true, url: targetLink});
+	}
 }
 
 function copyLink() {
@@ -74,14 +92,18 @@ document.addEventListener('DOMContentLoaded', function(){
 				}
 			}
 		}, false);
-		linkElement.addEventListener('input', function(event) {
+		linkElement.addEventListener('input', function() {
 			setLink(this.textContent);
 		}, false);
 
 		linkElement.addEventListener('click', function() { editLink(false); });
 		document.querySelector('#edit').addEventListener('click', function() { editLink(true); });
 		document.querySelector('#copy').addEventListener('click', copyLink);
-		document.querySelector('#incognito').addEventListener('click', openIncognito);
+		const incognito = document.querySelector('#incognito');
+		if (!hasBrowserObject()) {
+			incognito.textContent = incognito.textContent.replace('incognito', 'private');
+		}
+		incognito.addEventListener('click', openIncognito);
 		document.querySelector('#strip').addEventListener('click', stripLink);
 		document.querySelector('#reset').addEventListener('click', resetLink);
 	} else {
