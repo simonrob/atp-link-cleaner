@@ -4,4 +4,6 @@
 
 This cross-browser extension filters out that redirect, and replaces it with a simple confirmatory prompt that displays the actual URL that will be visited.
 
+Install via the [Firefox Add-ons store](https://addons.mozilla.org/firefox/addon/atp-link-cleaner/), or as an [unpacked extension](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world?hl=en#load-unpacked) for Chrome.
+
 License: MIT.
