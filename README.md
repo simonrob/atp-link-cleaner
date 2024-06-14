@@ -6,4 +6,7 @@ This cross-browser extension filters out that redirect, and replaces it with a s
 
 Install via the [Firefox Add-ons store](https://addons.mozilla.org/firefox/addon/atp-link-cleaner/), or as an [unpacked extension](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world?hl=en#load-unpacked) for Chrome.
 
-License: MIT.
+![ATP Link Cleaner intercepts requests to Office 365 Advanced Threat Protection / Microsoft Defender URLs, and shows an option to navigate directly to the obfuscated domain.](screenshot.png "ATP Link Cleaner intercepts requests to Office 365 Advanced Threat Protection / Microsoft Defender URLs, and shows an option to navigate directly to the obfuscated domain.")
+
+## License
+[MIT](https://github.com/simonrob/atp-link-cleaner/blob/master/LICENSE)
